@@ -206,5 +206,5 @@ function startTimerLine(time) {
 
 function queCounter(index) {
     let totalQuesCountTag = '<span><p>' + index + '</p>of<p>' + questions.length + '</p>Questions</span>';
-    bottom_ques_counter.innerHTML = totalQuesCountTag;
+    bottom_ques_counter.innerHTML = totalQueCountTag;
 }
