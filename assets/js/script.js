@@ -4,11 +4,11 @@ const info_box = document.querySelector(".info_box");
 const exit_btn = info_box.querySelector(".buttons .quit");
 const continue_btn = info_box.querySelector(".buttons .restart");
 const quiz_box = document.querySelector(".quiz_box");
-const result_box = quiz_box.querySelector(".result_box");
+const result_box = document.querySelector(".result_box");
 const option_list = document.querySelector(".option_list")
-const timeLine = quiz_box.querySelector(".header .timer_line");
+const time_line = document.querySelector(".header .time_line");
 const timeText = document.querySelector(".timer .time_left_txt");
-const timeCount = document.querySelector(".timer .time_sec");
+const timeCount = document.querySelector(".timer .timer_sec");
 
 // if start quiz button clicked
 start_btn.onclick = () => {
@@ -57,7 +57,7 @@ restart_quiz.onclick = ()=> {
     clearInterval(counterLine);
     startTimerLine(widthValue);
     timeText.textContent = "Time Left";
-    next_btn.style.display = "none";
+    next_btn.classList.remove("show");
 }
 
 // if quit quiz button clicked
@@ -80,7 +80,7 @@ next_btn.onclick = ()=> {
         clearInterval(counterLine);
         startTimerLine(widthValue);
         timeText.textContent = "Time Left";
-        next_btn.style.display = "none";
+        next_btn.classList.remove("show");
     }else{
         clearInterval(counter);
         clearInterval(counterLine);
@@ -91,8 +91,9 @@ next_btn.onclick = ()=> {
 // getting questions and options from array
 function showQuestions(index) {
     const que_text = document.querySelector(".que_text");
+
     let que_tag = '<span>' + questions[index].numb + "." + questions[index].question +'</span>';
-    let option_tag = '<div class="option">'+ questions[index].options[0] +'<span></span></div>';
+    let option_tag = '<div class="option">'+ questions[index].options[0] +'<span></span></div>'
                      + '<div class="option">'+ questions[index].options[1] +'<span></span></div>'
                      + '<div class="option">'+ questions[index].options[2] +'<span></span></div>'
                      + '<div class="option">'+ questions[index].options[3] +'<span></span></div>';
@@ -114,14 +115,13 @@ function optionSelected(answer) {
     clearInterval(counter);
     clearInterval(counterLine);
     let userAns = answer.textContent;
-    let correctAns = question[que_count].answer;
+    let correcAns = question[que_count].answer;
     const allOptions = option_list.children.length;
 
-    if(userAns == correctAns) {
+    if(userAns == correcAns) {
         userScore += 1;
-        console.log(userScore);
         answer.classList.add("correct");
-        answer.insertAdjacentHTML("beforeend", tickIcon);
+        answer.insertAdjacentHTML("beforeend", tickIconTag);
         console.log("Answer is Correct");
         console.log("Your correct answers = " + userScore);
     }else{
@@ -131,7 +131,7 @@ function optionSelected(answer) {
 
         // if answers is incorrect then automatically select the correct answer
         for (i=0; i < allOptions; i++) {
-            if(option_list.children[i].textContent == correctAns) {
+            if(option_list.children[i].textContent == correcAns) {
                 option_list.children[i].setAttribute("class", "option correct");
                 option_list.children[i].insertAdjacentHTML("beforeend", tickIconTag);
                 console.log("Auto selected correct answer.");
@@ -177,9 +177,9 @@ function startTimer(time) {
             clearInterval(counter);
             timeText.textContent = "Time Off";
             const allOptions = option_list.children.length;
-            let correctAns = questions[que_count].answer;
+            let correcAns = questions[que_count].answer;
             for(i=0; i < allOptions; i++) {
-                if(option_list.children[i].textContent == correctAns) {
+                if(option_list.children[i].textContent == correcAns) {
                     option_list.children[i].setAttribute("class", "option correct");
                     option_list.children[i].insertAdjacentHTML("beforeend", tickIconTag);
                     console.log("Time Off: Auto selected correct answer.");
@@ -205,6 +205,6 @@ function startTimerLine(time) {
 }
 
 function queCounter(index) {
-    let totalQuesCountTag = '<span><p>' + index + '</p>of<p>' + questions.length + '</p>Questions</span>';
-    bottom_ques_counter.innerHTML = totalQuesCountTag;
+    let totalQueCounTag = '<span><p>' + index + '</p>of<p>' + questions.length + '</p>Questions</span>';
+    bottom_ques_counter.innerHTML = totalQueCounTag;
 }
